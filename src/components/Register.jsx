@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ButtonLogin, ContainerLogin, FormLogin, Input } from "../style";
+import { ContainerLogin, FormLogin, Input } from "../style";
 import { colors } from "../utils";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FormControlLabel, FormGroup, Switch } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -11,6 +12,8 @@ function Register() {
   const [name, setName] = useState("");
   const [invalidUser, setInvalidUser] = useState(false);
   const [business, setBusiness] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [messageError, setMessageError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +23,7 @@ function Register() {
   }, []);
 
   function register() {
+    setLoading(true);
     const payload = {
       email,
       name,
@@ -36,15 +40,23 @@ function Register() {
         localStorage.setItem("is_ong", res.data.is_ong);
         navigate("/dashboard/feed");
       })
-      .catch(() => {
+      .catch((error) => {
         setInvalidUser(true);
+        if (error.response.status === 409) {
+          setMessageError("Usuário já existe!");
+        } else {
+          setMessageError("Algo deu errado!");
+        }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }
 
   return (
     <ContainerLogin
       style={{
-        backgroundColor: colors.main,
+        backgroundColor: "#121212",
         color: colors.main,
         fontWeight: "bold",
       }}
@@ -88,8 +100,17 @@ function Register() {
             label="Perfil empresarial"
           />
         </FormGroup>
-        {invalidUser && <p style={{ color: "red" }}>Usuário já existe</p>}
-        <ButtonLogin>Cadastrar</ButtonLogin>
+        {invalidUser && <p style={{ color: "red" }}>{messageError}</p>}
+
+        <LoadingButton
+          sx={{ backgroundColor: colors.main, width: "100%" }}
+          variant="contained"
+          size="small"
+          loading={loading}
+          type="submit"
+        >
+          Cadastrar
+        </LoadingButton>
         <Link style={{ color: colors.main }} to={"/login"}>
           Já tem uma conta? Faça login!
         </Link>

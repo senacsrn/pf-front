@@ -18,17 +18,17 @@ const Dashboard = ({ children }) => {
     }
   }, []);
   return (
-    <Container style={{ backgroundColor: colors.main }}>
+    <Container style={{ backgroundColor: "#0f1b2b" }}>
       <Header style={{ color: colors.main }}>
         <PetsIcon />
         <LogoutIcon onClick={logout} />
       </Header>
       <Content>{children}</Content>
       <Footer style={{ color: colors.main }}>
-        <DynamicFeedIcon />
-        <SearchIcon />
+        <DynamicFeedIcon onClick={() => navigate("feed")} />
+        <SearchIcon onClick={() => navigate("search")} />
         <LoupeIcon />
-        <AccountCircleIcon />
+        <AccountCircleIcon onClick={() => navigate("profile")} />
       </Footer>
     </Container>
   );
@@ -37,12 +37,10 @@ const Dashboard = ({ children }) => {
 const Container = styled.div`
   width: 100%;
   height: 100vh;
-  padding: 50px 0 70px 0;
 `;
 
 const Content = styled.div`
   width: 100%;
-  padding: 0.5rem;
 `;
 
 const Header = styled.header`
@@ -53,7 +51,8 @@ const Header = styled.header`
   justify-content: space-between;
   position: fixed;
   top: 0;
-  background-color: aliceblue;
+  background-color: #0f1b2b;
+  z-index: 9999;
 `;
 
 const Footer = styled.footer`
@@ -63,7 +62,7 @@ const Footer = styled.footer`
   justify-content: space-between;
   position: fixed;
   bottom: 0;
-  background-color: aliceblue;
+  background-color: #0f1b2b;
   width: 100%;
   border-radius: 8px 8px 0 0;
 `;

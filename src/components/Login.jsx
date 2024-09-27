@@ -1,13 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ButtonLogin, ContainerLogin, FormLogin, Input } from "../style";
+import { ContainerLogin, FormLogin, Input } from "../style";
 import { colors } from "../utils";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { LoadingButton } from "@mui/lab";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [invalidUser, setInvalidUser] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +19,7 @@ function Login() {
   }, []);
 
   function auth() {
+    setLoading(true);
     const payload = {
       email,
       password,
@@ -29,13 +32,16 @@ function Login() {
       })
       .catch(() => {
         setInvalidUser(true);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }
 
   return (
     <ContainerLogin
       style={{
-        backgroundColor: colors.main,
+        backgroundColor: "#121212",
         color: colors.main,
         fontWeight: "bold",
       }}
@@ -62,7 +68,15 @@ function Login() {
           type="password"
         />
         {invalidUser && <p style={{ color: "red" }}>Usuário inválido</p>}
-        <ButtonLogin>Entrar</ButtonLogin>
+        <LoadingButton
+          sx={{ backgroundColor: colors.main, width: "100%" }}
+          variant="contained"
+          size="small"
+          loading={loading}
+          type="submit"
+        >
+          Entrar
+        </LoadingButton>
         <Link style={{ color: colors.main }} to={"/register"}>
           Não tem uma conta? Cadastre-se!
         </Link>

@@ -15,17 +15,17 @@ export const FormLogin = styled.form`
   justify-content: center;
   flex-direction: column;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #0f1b2b;
   padding: 1rem;
   gap: 1rem;
 `;
 
 export const Input = styled.input`
   width: 100%;
-  border-radius: 8px;
+  border-radius: 5px;
   font-size: 1rem;
   padding: 0.5rem;
-  border: 2px solid #1070ca;
+  border: 1px solid #1070ca;
   outline: none;
 `;
 

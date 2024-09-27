@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
+import Feed from "./components/Feed";
 
 function App() {
   return (
@@ -16,9 +17,9 @@ function App() {
             element={
               <Dashboard>
                 <Routes>
-                  <Route path="feed" element={<>feed</>} />
-                  <Route path="search" element={<>feed</>} />
-                  <Route path="profile" element={<>feed</>} />
+                  <Route path="feed" element={<Feed />} />
+                  <Route path="search" element={<>search</>} />
+                  <Route path="profile" element={<>profile</>} />
                 </Routes>
               </Dashboard>
             }
